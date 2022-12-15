@@ -1,0 +1,21 @@
+# Config file to create a K8 Object
+
+# Each API version defines a set of Objects we can use
+# Use an Object in the v1 apiVersion
+apiVersion: v1
+# Create an Object of type Service
+kind: Service
+metadata:
+  name: client-node-port
+spec:
+  # Create a Service of type NodePort, which exposes a container the outside world (so we can access the container in our browser)
+  type: NodePort
+  ports:
+    # Another pod can use this port to access the client pod
+    - port: 3050
+      # Forward traffic from 31515 to 3000 (we visit port 31515 to access the client pod)
+      targetPort: 3000
+      nodePort: 31515
+  # Forward traffic to all Objects in this cluster with the label 'component: web'
+  selector:
+    component: web

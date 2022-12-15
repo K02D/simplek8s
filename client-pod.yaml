@@ -1,0 +1,19 @@
+# Config file to create a K8 Object
+
+# Each API version defines a set of Objects we can use
+# Use an Object in the v1 apiVersion
+apiVersion: v1
+# Create an Object of type Pod
+kind: Pod
+metadata:
+  name: client-pod
+  # Attach label so Service in client-node-port.yaml can direct traffic here
+  labels:
+    component: web
+spec:
+  containers:
+    - name: client
+      image: stephengrider/multi-worker
+      ports:
+        # Expose port 3000 on this container to the outside world
+        - containerPort: 3000
